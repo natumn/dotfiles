@@ -1,0 +1,2 @@
+100
+['Shougo/echodoc.vim', 'Shougo/unite.vim', 'buoto/gotests-vim', 'ctrlpvim/ctrlp.vim', 'def-lkb/ocp-indent-vim', 'fatih/vim-go', 'itchyny/lightline.vim', 'posva/vim-vue', 'racer-rust/vim-racer', 'scrooloose/nerdtree', 'scrooloose/syntastic', 'tacahiroy/ctrlp-funky', 'tomtom/tcomment_vim', 'tpope/vim-fugitive', 'wakatime/vim-wakatime']
