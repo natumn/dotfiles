@@ -1,1 +1,1 @@
-/Users/natsumekoki/.config/fisherman/batman/fish_greeting.fish
+/Users/natsumekoki/.config/fisherman/bobthefish/fish_greeting.fish
