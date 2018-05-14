@@ -1,0 +1,1 @@
+/Users/natsumekoki/.config/fisherman/batman/fish_greeting.fish
