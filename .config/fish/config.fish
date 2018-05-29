@@ -1,6 +1,7 @@
 # set up path
 set -x -U GOPATH $HOME/go
-set -x -U GOBIN $GOPATH/bin
+set -x PATH $GOPATH/bin $PATH
+set -x PATH $GOROOT/bin $PATH
 set -x PATH $HOME/.cargo/bin $PATH
 set -x PATH $HOME/.local/bin $PATH
 set -x PATH $HOME/google-cloud-sdk/bin $PATH

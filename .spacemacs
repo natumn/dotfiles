@@ -325,6 +325,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq-default evil-escape-delay 0.2)
   (setq-default evil-escape-key-sequence "jj")
+  (define-key global-map [165] [92])
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
