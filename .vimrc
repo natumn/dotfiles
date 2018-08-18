@@ -30,6 +30,7 @@ set noswapfile
 
 inoremap <silent> jj <ESC>
 map <C-n> :NERDTreeToggle<CR>
+map <S-t> :terminal<CR>
 
 " 自動的に閉じ括弧を入力する
 imap { {}<LEFT>
@@ -79,6 +80,7 @@ let g:neocomplete#force_omni_input_patterns.ocaml = '[^. *\t]\.\w*\|\h\w*|#'
 "	  autocmd!
 "		autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
 "augroup END
+"
 
 " Note: Skip initialization for vim-tiny or vim-small.
  if 0 | endif
@@ -141,6 +143,11 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_deadline = "5s"
 " guruで急に定義元ジャンプできなくなる部分が出てきたので、https://github.com/fatih/vim-go/issues/1687を参考にgodefに修正した。直った理由はよくわからない
 let g:go_def_mode = "godef"
+
+
+" errの色を変える
+autocmd FileType go :highlight goErr cterm=bold ctermfg=9
+autocmd FileType go :match goErr /\<err\>/
 
 
 call dein#add('fatih/vim-go')
