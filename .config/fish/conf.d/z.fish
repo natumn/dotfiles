@@ -1,0 +1,1 @@
+/Users/natsumekoki/.config/fisherman/z/conf.d/z.fish

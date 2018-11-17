@@ -2,6 +2,11 @@
 # Do NOT edit it directly, your changes will be overwritten.
 SET_EXPORT GOBIN:/Users/natsumekoki/go/bin
 SET_EXPORT GOPATH:/Users/natsumekoki/go
+SET_EXPORT GOROOT:/usr/local/opt/go/libexec
+SET ZO_CMD:zo
+SET Z_CMD:z
+SET Z_DATA:/Users/natsumekoki/\x2ez
+SET Z_EXCLUDE:/Users/natsumekoki
 SET __fish_init_2_39_8:\x1d
 SET __fish_init_2_3_0:\x1d
 SET fish_color_autosuggestion:555\x1ebrblack
@@ -32,4 +37,4 @@ SET fish_pager_color_description:B3A06D\x1eyellow
 SET fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SET fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SET fisher_active_prompt:bobthefish
-SET fisher_dependency_count:bass\x1ebobthefish
+SET fisher_dependency_count:bass\x1ebobthefish\x1epeco\x1egetopts\x1ez

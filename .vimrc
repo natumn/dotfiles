@@ -43,11 +43,7 @@ set background=dark
 colorscheme solarized
 let g:solarized_termtrans = 1
 let g:solarized_termcolors= 256 
-" let g:solarized_degrade = 1 
-" let g:solarized_bold = 1
 let g:solarized_underline = 1
-" let g:solarized_contrast = "normal" 
-" let g:solarized_visibility= "normal"
     
 " Rust-vim.rust vim set up.
 let g:rustfmt_autosave = 1
@@ -143,7 +139,8 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_deadline = "5s"
 " guruで急に定義元ジャンプできなくなる部分が出てきたので、https://github.com/fatih/vim-go/issues/1687を参考にgodefに修正した。直った理由はよくわからない
 let g:go_def_mode = "godef"
-
+" tagをsnakecaseまたは camelcaseに指定できる
+let go_addtags_transform = 'camelcase'
 
 " errの色を変える
 autocmd FileType go :highlight goErr cterm=bold ctermfg=9
@@ -152,6 +149,7 @@ autocmd FileType go :match goErr /\<err\>/
 
 call dein#add('fatih/vim-go')
 call dein#add('racer-rust/vim-racer')
+call dein#add('rust-lang/rust.vim')
 call dein#add('Shougo/echodoc.vim')
 call dein#add('Shougo/unite.vim')
 call dein#add('tomtom/tcomment_vim')
@@ -163,7 +161,32 @@ call dein#add('posva/vim-vue')
 call dein#add('scrooloose/syntastic')
 call dein#add('def-lkb/ocp-indent-vim')
 call dein#add('buoto/gotests-vim')
+call dein#add('rking/ag.vim')
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
+" ag and unite set up
+" insert modeで開始
+let g:unite_enable_start_insert = 1
+
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+
+" grep検索
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+
+" カーソル位置の単語をgrep検索
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+
+" grep検索結果の再呼出
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " lightline setup
 call dein#add('itchyny/lightline.vim')
@@ -263,7 +286,6 @@ let g:lightline.tab = {'active': ['prefix', 'filename']}
 let g:lightline.tab.inactive = g:lightline.tab.active
 
 " CtrlPの設定
-
 let g:ctrlp_match_window = 'order:ttb,min:20,max:20,results:100' " マッチウインドウの設定. 「下部に表示, 大きさ20行で固定, 検索結果100件」
 let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
 let g:ctrlp_types = ['fil'] "ファイル検索のみ使用
@@ -272,39 +294,6 @@ let g:ctrlp_extensions = ['funky'] " CtrlPの拡張として「funky」と「com
 " CtrlPFunkyの有効化
 let g:ctrlp_funky_matchtype = 'path'
 
-" " neocomplete・neosnippet・neosnippet-snippets（コードの自動補完）
-" if has('lua')
-" 	call dein#add('Shougo/neocomplete.vim')
-" 	call dein#add('Shougo/neosnippet')
-" 	call dein#add('Shougo/neosnippet-snippets')
-" endif
-"
-" " neocomplete・neosnippetの設定
-"
-" " Vim起動時にneocompleteを有効にする
-" let g:neocomplete#enable_at_startup = 1
-"
-" " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
-" let g:neocomplete#enable_smart_case = 1
-"
-"  " 3文字以上の単語に対して補完を有効にする
-" let g:neocomplete#min_keyword_length = 3
-"
-" " 区切り文字まで補完する
-" let g:neocomplete#enable_auto_delimiter = 1
-"
-" " 1文字目の入力から補完のポップアップを表示
-" let g:neocomplete#auto_completion_start_length = 1
-"
-" " バックスペースで補完のポップアップを閉じる
-" inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-"
-" " エンターキーで補完候補の確定.スニペットの展開もエンターキーで確定・・・・・・②
-" imap <expr><CR> neosnippet#expandable() ? <Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>")))
-"
-" " タブキーで補完候補の選択.スニペット内のジャンプもタブキーでジャンプ・・・・・・③
-" imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>")))
-"
 " 必須
 call dein#end()
 filetype plugin indent on
