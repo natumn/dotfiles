@@ -33,3 +33,15 @@ eval (hub alias -s | source)
 function fish_user_key_bindings
     bind \cr peco_select_history
 end
+
+# fzf
+# find checkout branch
+function fcb
+	git branch --all | grep -v HEAD | string trim | fzf | read -l result; and git checkout "$result"
+end
+
+# ssh
+function fssh -d "Fuzzy-find ssh host via ag and ssh into it"
+  ag --ignore-case '^host [^*]' ~/.ssh/config | cut -d ' ' -f 2 | fzf | read -l result; and ssh "$result"
+end
+

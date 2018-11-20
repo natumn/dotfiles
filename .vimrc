@@ -20,15 +20,13 @@ nnoremap Y y$
 
 set display=lastline
 
-set ignorecase
-
 set shiftwidth=2
 
 set noswapfile
 
 "keymap and setting
-
 inoremap <silent> jj <ESC>
+
 map <C-n> :NERDTreeToggle<CR>
 map <S-t> :terminal<CR>
 
@@ -45,7 +43,7 @@ let g:solarized_termtrans = 1
 let g:solarized_termcolors= 256 
 let g:solarized_underline = 1
     
-" Rust-vim.rust vim set up.
+" Rust set up.
 let g:rustfmt_autosave = 1
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 set hidden
@@ -59,12 +57,12 @@ execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 " syntacshit check
 let g:syntastic_ocaml_checkers = ['merlin']
 "ocp-indent setup
-" execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
-" function! s:ocaml_format()
-"	  let now_line = line('.')
-"		exec ':%! ocp-indent'
-"		exec ':' . now_line
-"endfunction
+ execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
+function! s:ocaml_format()
+	  let now_line = line('.')
+		exec ':%! ocp-indent'
+		exec ':' . now_line
+endfunction
 
 if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {}
@@ -72,44 +70,36 @@ endif
 
 let g:neocomplete#force_omni_input_patterns.ocaml = '[^. *\t]\.\w*\|\h\w*|#'
 
-"augroup ocaml_format
-"	  autocmd!
-"		autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
-"augroup END
-"
+augroup ocaml_format
+	  autocmd!
+		autocmd BufWrite,FileWritePre,FileAppendPre *.mli\= call s:ocaml_format()
+augroup END
+
+" golang setup
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_deadline = "5s"
+" guruで急に定義元ジャンプできなくなる部分が出てきたので、https://github.com/fatih/vim-go/issues/1687
+let g:go_def_mode = "godef"
+" tagをsnakecaseまたは camelcaseに指定できる
+let go_addtags_transform = 'camelcase'
+" errの色を変える
+autocmd FileType go :highlight goErr cterm=bold ctermfg=9
+autocmd FileType go :match goErr /\<err\>/
+
+" Haskell setup
+
 
 " Note: Skip initialization for vim-tiny or vim-small.
  if 0 | endif
 
- if &compatible
-	 set nocompatible               " Be iMproved
- endif
+" " Required:
+filetype plugin indent on
 
- " Required:
- set runtimepath+=~/.vim/bundle/neobundle.vim/
-
- " Required:
- call neobundle#begin(expand('~/.vim/bundle/'))
-
- " Let NeoBundle manage NeoBundle
- " Required:
- NeoBundleFetch 'Shougo/neobundle.vim'
-
- " My Bundles here:
- " Refer to |:NeoBundle-examples|.
- " Note: You don't set neobundle setting in .gvimrc!
-
- call neobundle#end()
-
- " Required:
- filetype plugin indent on
-
- " If there are uninstalled bundles found on startup,
- " this will conveniently prompt you to install them.
- NeoBundleCheck
-
- syntax on
-" color dracula
+syntax on
 
 " dein config
  let s:dein_dir = fnamemodify('~/.vim/dein/', ':p')
@@ -122,30 +112,22 @@ let g:neocomplete#force_omni_input_patterns.ocaml = '[^. *\t]\.\w*\|\h\w*|#'
 
 call dein#begin(s:dein_dir)
 
-"Plugins
-" call dein#add('Shogo/neocomplete')
-" nerdtree autocmd
 call dein#add('scrooloose/nerdtree')
 " if close file, NERDTree close at some time
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" autocmd VimEnter * execute 'NERDTree'
 
-" vim-go setup
-let g:go_fmt_command = "goimports"
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-let g:go_metalinter_deadline = "5s"
-" guruで急に定義元ジャンプできなくなる部分が出てきたので、https://github.com/fatih/vim-go/issues/1687を参考にgodefに修正した。直った理由はよくわからない
-let g:go_def_mode = "godef"
-" tagをsnakecaseまたは camelcaseに指定できる
-let go_addtags_transform = 'camelcase'
+call dein#add('Shougo/deoplete.nvim')
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
+endif
+let g:deoplete#enable_at_startup = 1
 
-" errの色を変える
-autocmd FileType go :highlight goErr cterm=bold ctermfg=9
-autocmd FileType go :match goErr /\<err\>/
-
+" Pass a dictionary to set multiple options
+call deoplete#custom#option({
+\ 'auto_complete_delay': 200,
+\ 'smart_case': v:true,
+\ })
 
 call dein#add('fatih/vim-go')
 call dein#add('racer-rust/vim-racer')
@@ -163,6 +145,8 @@ call dein#add('def-lkb/ocp-indent-vim')
 call dein#add('buoto/gotests-vim')
 call dein#add('rking/ag.vim')
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('yonchu/accelerated-smooth-scroll')
+let g:ac_smooth_scroll_du_sleep_time_msec = 3
 
 " ag and unite set up
 " insert modeで開始
@@ -306,3 +290,5 @@ endif
 
 "バックスペースが効かないのを直す
 set backspace=indent,eol,start
+
+
