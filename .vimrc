@@ -24,6 +24,11 @@ set shiftwidth=2
 
 set noswapfile
 
+" tabからスペース2
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
 "keymap and setting
 inoremap <silent> jj <ESC>
 
@@ -144,6 +149,12 @@ call dein#add('scrooloose/syntastic')
 call dein#add('def-lkb/ocp-indent-vim')
 call dein#add('buoto/gotests-vim')
 call dein#add('rking/ag.vim')
+" indent lineの設定
+call dein#add('Yggdroot/indentLine')
+let g:indentLine_char = '¦'
+" set list listchars=tab:\¦\
+let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
+
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#add('yonchu/accelerated-smooth-scroll')
 let g:ac_smooth_scroll_du_sleep_time_msec = 3
