@@ -1,0 +1,9 @@
+
+
+"keymap and setting
+inoremap <silent> jj <ESC>
+
+" 自動的に閉じ括弧を入力する
+imap { {}<LEFT>
+imap [ []<LEFT>
+imap ( ()<LEFT>
